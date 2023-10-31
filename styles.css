@@ -1,0 +1,16 @@
+body {
+  background-image: url("https://images.pexels.com/photos/4124939/pexels-photo-4124939.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+}
+.container {
+  width: 70%;
+  margin: 100px auto;
+}
+
+li {
+  font-size: 18px;
+}
+
+.main-part {
+  font-size: 17px;
+  padding: 10px;
+}
