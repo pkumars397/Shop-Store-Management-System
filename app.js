@@ -10,7 +10,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       let items = response.data;
       items.forEach((item) => {
         showDetails(item);
-        console.log(item);
       });
     } else {
       throw new Error("Something Went Wrong API limit Execeeded");
@@ -25,6 +24,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 // Adding eventListner when submit happens then,send the data to crud crud. and also show on screen after sending the data.
 form.addEventListener("submit", async (event) => {
+  console.log(event);
   event.preventDefault();
   const details = {
     item: event.target.item.value,
@@ -38,8 +38,15 @@ form.addEventListener("submit", async (event) => {
       "https://crudcrud.com/api/64e7ce9ee3704f6f8771aa92e7343674/StoreDetails",
       details
     );
-    if (response.status == 201) showDetails(response.data);
-    else throw new Error("Error posting data");
+    if (response.status == 201) {
+      showDetails(response.data);
+      event.target.item.value = "";
+      event.target.Description.valu = "";
+      event.target.price.value = "";
+      event.target.quantity.value = "";
+    } else {
+      throw new Error("Error posting data");
+    }
   } catch (error) {
     console.log(error);
   }
