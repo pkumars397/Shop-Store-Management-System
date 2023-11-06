@@ -1,28 +1,30 @@
 const form = document.getElementById("form");
 
 // Showing the details from the crud crud after refreshing the page
-document.addEventListener("DOMContentLoaded", () => {
-  axios
-    .get(
-      "https://crudcrud.com/api/cc4a3711f7c6403f8adb0e067d15c4c7/StoreDetails"
-    )
-    .then((responce) => {
-      let items = responce.data;
+document.addEventListener("DOMContentLoaded", async () => {
+  try {
+    const response = await axios.get(
+      "https://crudcrud.com/api/64e7ce9ee3704f6f8771aa92e7343674/StoreDetails"
+    );
+    if (response.status == 200) {
+      let items = response.data;
       items.forEach((item) => {
         showDetails(item);
+        console.log(item);
       });
-    })
-    .catch((error) => {
-      const ul = document.getElementById("list");
-      error = "Api request Limit Exceeded";
-      ul.innerHTML =
-        ul.innerHTML +
-        `<div style="background-color:rgb(177, 52, 21); padding:4px;"><pre>Something Wrong  ${error}</pre></div>`;
-    });
+    } else {
+      throw new Error("Something Went Wrong API limit Execeeded");
+    }
+  } catch (Error) {
+    const ul = document.getElementById("list");
+    ul.innerHTML =
+      ul.innerHTML +
+      `<div style="background-color:rgb(177, 52, 21); padding:4px;"><pre>${Error}</pre></div>`;
+  }
 });
 
 // Adding eventListner when submit happens then,send the data to crud crud. and also show on screen after sending the data.
-form.addEventListener("submit", (event) => {
+form.addEventListener("submit", async (event) => {
   event.preventDefault();
   const details = {
     item: event.target.item.value,
@@ -31,15 +33,16 @@ form.addEventListener("submit", (event) => {
     quantity: event.target.quantity.value,
   };
 
-  axios
-    .post(
-      "https://crudcrud.com/api/cc4a3711f7c6403f8adb0e067d15c4c7/StoreDetails",
+  try {
+    const response = await axios.post(
+      "https://crudcrud.com/api/64e7ce9ee3704f6f8771aa92e7343674/StoreDetails",
       details
-    )
-    .then((responce) => {
-      showDetails(responce.data);
-    })
-    .catch((error) => console.log(error));
+    );
+    if (response.status == 201) showDetails(response.data);
+    else throw new Error("Error posting data");
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 // Showing the Details available about goods in Shoping store.
@@ -61,7 +64,7 @@ const showDetails = function (obj) {
   list.innerHTML = list.innerHTML + li;
 };
 
-function buy1(obj) {
+async function buy1(obj) {
   if (obj.quantity >= 1) obj.quantity -= 1;
   newDetails = {
     item: obj["item"],
@@ -69,24 +72,22 @@ function buy1(obj) {
     price: obj["price"],
     quantity: obj["quantity"],
   };
-
-  axios
-    .put(
-      `https://crudcrud.com/api/cc4a3711f7c6403f8adb0e067d15c4c7/StoreDetails/${obj._id}`,
+  try {
+    const updateData = await axios.put(
+      `https://crudcrud.com/api/64e7ce9ee3704f6f8771aa92e7343674/StoreDetails/${obj._id}`,
       newDetails
-    )
-    .then(() => {
-      axios
-        .get(
-          `https://crudcrud.com/api/cc4a3711f7c6403f8adb0e067d15c4c7/StoreDetails/${obj._id}`
-        )
-        .then((response) => {
-          update(response.data, obj);
-        });
-    });
+    );
+    const getData = await axios.get(
+      `https://crudcrud.com/api/64e7ce9ee3704f6f8771aa92e7343674/StoreDetails/${obj._id}`
+    );
+    if (getData.status == 200) update(getData.data, obj);
+    else throw new Error("unable to find the data");
+  } catch (error) {
+    console.log(error);
+  }
 }
 
-function buy2(obj) {
+async function buy2(obj) {
   obj.quantity >= 2 ? (obj.quantity -= 2) : obj.quantity;
   newDetails = {
     item: obj["item"],
@@ -95,22 +96,22 @@ function buy2(obj) {
     quantity: obj["quantity"],
   };
 
-  axios
-    .put(
-      `https://crudcrud.com/api/cc4a3711f7c6403f8adb0e067d15c4c7/StoreDetails/${obj._id}`,
+  try {
+    const updateData = await axios.put(
+      `https://crudcrud.com/api/64e7ce9ee3704f6f8771aa92e7343674/StoreDetails/${obj._id}`,
       newDetails
-    )
-    .then(() => {
-      axios
-        .get(
-          `https://crudcrud.com/api/cc4a3711f7c6403f8adb0e067d15c4c7/StoreDetails/${obj._id}`
-        )
-        .then((response) => {
-          update(response.data, obj);
-        });
-    });
+    );
+    const getData = await axios.get(
+      `https://crudcrud.com/api/64e7ce9ee3704f6f8771aa92e7343674/StoreDetails/${obj._id}`
+    );
+    if (getData.status == 200) update(getData.data, obj);
+    else throw new Error("unable to find the data");
+  } catch (error) {
+    console.log(error);
+  }
 }
-function buy3(obj) {
+
+async function buy3(obj) {
   obj.quantity >= 3 ? (obj.quantity -= 3) : obj.quantity;
   newDetails = {
     item: obj["item"],
@@ -119,20 +120,19 @@ function buy3(obj) {
     quantity: obj["quantity"],
   };
 
-  axios
-    .put(
-      `https://crudcrud.com/api/cc4a3711f7c6403f8adb0e067d15c4c7/StoreDetails/${obj._id}`,
+  try {
+    const updateData = await axios.put(
+      `https://crudcrud.com/api/64e7ce9ee3704f6f8771aa92e7343674/StoreDetails/${obj._id}`,
       newDetails
-    )
-    .then(() => {
-      axios
-        .get(
-          `https://crudcrud.com/api/cc4a3711f7c6403f8adb0e067d15c4c7/StoreDetails/${obj._id}`
-        )
-        .then((response) => {
-          update(response.data, obj);
-        });
-    });
+    );
+    const getData = await axios.get(
+      `https://crudcrud.com/api/64e7ce9ee3704f6f8771aa92e7343674/StoreDetails/${obj._id}`
+    );
+    if (getData.status == 200) update(getData.data, obj);
+    else throw new Error("unable to find the data");
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 function update(newData, obj) {
