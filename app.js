@@ -4,11 +4,10 @@ const form = document.getElementById("form");
 document.addEventListener("DOMContentLoaded", () => {
   axios
     .get(
-      "https://crudcrud.com/api/837b70549f724f05b4d01728e16f6e32/StoreDetails"
+      "https://crudcrud.com/api/79752dc4e2ca4c618da146dc191819c8/StoreDetails"
     )
     .then((responce) => {
       let items = responce.data;
-      // console.log(responce);
       items.forEach((item) => {
         showDetails(item);
       });
@@ -34,7 +33,7 @@ form.addEventListener("submit", (event) => {
 
   axios
     .post(
-      "https://crudcrud.com/api/837b70549f724f05b4d01728e16f6e32/StoreDetails",
+      "https://crudcrud.com/api/cc4a3711f7c6403f8adb0e067d15c4c7/StoreDetails",
       details
     )
     .then((responce) => {
@@ -47,9 +46,8 @@ form.addEventListener("submit", (event) => {
 const showDetails = function (obj) {
   // console.log(obj);
   const list = document.getElementById("list");
-  let li = `<pre><li id='${
-    obj._id
-  }' style="background-color:lightblue; padding:5px"> ItemName: ${
+  let li = `<pre id='${obj._id}'><li
+  }' style="background-color:lightblue; padding:8px"> ItemName: ${
     obj.item
   }, Description: ${obj.description} Price: ${obj.price}, Quantity: ${
     obj.quantity
@@ -74,15 +72,13 @@ function buy1(obj) {
 
   axios
     .put(
-      `https://crudcrud.com/api/837b70549f724f05b4d01728e16f6e32/StoreDetails/${obj._id}`,
+      `https://crudcrud.com/api/cc4a3711f7c6403f8adb0e067d15c4c7/StoreDetails/${obj._id}`,
       newDetails
     )
     .then(() => {
-      // const span = document.getElementById(`${obj.item}`);
-      // span.innerHTML = `${newDetails.quantity}`;
       axios
         .get(
-          `https://crudcrud.com/api/837b70549f724f05b4d01728e16f6e32/StoreDetails/${obj._id}`
+          `https://crudcrud.com/api/cc4a3711f7c6403f8adb0e067d15c4c7/StoreDetails/${obj._id}`
         )
         .then((response) => {
           update(response.data, obj);
@@ -91,7 +87,6 @@ function buy1(obj) {
 }
 
 function buy2(obj) {
-  // console.log(obj);
   obj.quantity -= 2;
   newDetails = {
     item: obj["item"],
@@ -102,15 +97,13 @@ function buy2(obj) {
 
   axios
     .put(
-      `https://crudcrud.com/api/837b70549f724f05b4d01728e16f6e32/StoreDetails/${obj._id}`,
+      `https://crudcrud.com/api/cc4a3711f7c6403f8adb0e067d15c4c7/StoreDetails/${obj._id}`,
       newDetails
     )
     .then(() => {
-      // const span = document.getElementById(`${obj.item}`);
-      // span.innerHTML = `${newDetails.quantity}`;
       axios
         .get(
-          `https://crudcrud.com/api/837b70549f724f05b4d01728e16f6e32/StoreDetails/${obj._id}`
+          `https://crudcrud.com/api/cc4a3711f7c6403f8adb0e067d15c4c7/StoreDetails/${obj._id}`
         )
         .then((response) => {
           update(response.data, obj);
@@ -118,7 +111,6 @@ function buy2(obj) {
     });
 }
 function buy3(obj) {
-  // console.log(obj);
   obj.quantity -= 3;
   newDetails = {
     item: obj["item"],
@@ -129,15 +121,13 @@ function buy3(obj) {
 
   axios
     .put(
-      `https://crudcrud.com/api/837b70549f724f05b4d01728e16f6e32/StoreDetails/${obj._id}`,
+      `https://crudcrud.com/api/cc4a3711f7c6403f8adb0e067d15c4c7/StoreDetails/${obj._id}`,
       newDetails
     )
     .then(() => {
-      // const span = document.getElementById(`${obj.item}`);
-      // span.innerHTML = `${newDetails.quantity}`;
       axios
         .get(
-          `https://crudcrud.com/api/837b70549f724f05b4d01728e16f6e32/StoreDetails/${obj._id}`
+          `https://crudcrud.com/api/cc4a3711f7c6403f8adb0e067d15c4c7/StoreDetails/${obj._id}`
         )
         .then((response) => {
           update(response.data, obj);
@@ -147,9 +137,8 @@ function buy3(obj) {
 
 function update(newData, obj) {
   const li = document.getElementById(`${obj._id}`);
-  li.innerHTML = `<pre><li id='${
-    newData._id
-  }' style="background-color:lightblue; padding:7px"> ItemName: ${
+  li.innerHTML = `<pre><li id='${obj._id}'
+  }' style="background-color:lightblue; padding:8px"> ItemName: ${
     newData.item
   }, Description: ${newData.description} Price: ${newData.price}, Quantity: ${
     newData.quantity
