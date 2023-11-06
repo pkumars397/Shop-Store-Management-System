@@ -4,7 +4,7 @@ const form = document.getElementById("form");
 document.addEventListener("DOMContentLoaded", () => {
   axios
     .get(
-      "https://crudcrud.com/api/79752dc4e2ca4c618da146dc191819c8/StoreDetails"
+      "https://crudcrud.com/api/cc4a3711f7c6403f8adb0e067d15c4c7/StoreDetails"
     )
     .then((responce) => {
       let items = responce.data;
@@ -62,7 +62,7 @@ const showDetails = function (obj) {
 };
 
 function buy1(obj) {
-  obj.quantity -= 1;
+  if (obj.quantity >= 1) obj.quantity -= 1;
   newDetails = {
     item: obj["item"],
     description: obj["description"],
@@ -87,7 +87,7 @@ function buy1(obj) {
 }
 
 function buy2(obj) {
-  obj.quantity -= 2;
+  obj.quantity >= 2 ? (obj.quantity -= 2) : obj.quantity;
   newDetails = {
     item: obj["item"],
     description: obj["description"],
@@ -111,7 +111,7 @@ function buy2(obj) {
     });
 }
 function buy3(obj) {
-  obj.quantity -= 3;
+  obj.quantity >= 3 ? (obj.quantity -= 3) : obj.quantity;
   newDetails = {
     item: obj["item"],
     description: obj["description"],
